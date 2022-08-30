@@ -1,4 +1,16 @@
+// loader 
+const loader = isloading => {
+    const loaderElement = document.getElementById('loader')
+    if (isloading) {
+        loaderElement.classList.remove('d-none')
+    } else {
+        loaderElement.classList.add('d-none')
+    }
+}
+
+
 const loadUsers = async () => {
+    loader(true)
     const url = 'https://randomuser.me/api/?results=50';
     try {
         const res = await fetch(url);
@@ -38,10 +50,12 @@ const showUsersData = users => {
         // console.log(user);
         usersDiv.appendChild(tr);
     });
+    loader(false);
 }
 
-
+// load user details from API
 const loadUsersDetails = async (url) => {
+    loader(true);
     const userDetailsContainer = document.getElementById('dynamic-user-details');
     userDetailsContainer.innerHTML = '';
     try {
@@ -52,10 +66,10 @@ const loadUsersDetails = async (url) => {
     catch (error) {
         console.log(error);
     }
-
-
 }
 
+
+// show user details
 const showUsersDetails = (userDetails) => {
     document.getElementById('dynamic-user-details').innerHTML = `
     <div class="modal-header justify-content-center">
@@ -76,5 +90,7 @@ const showUsersDetails = (userDetails) => {
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>
     `
-    console.log(userDetails);
+    loader(false);
 }
+
+

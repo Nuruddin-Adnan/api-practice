@@ -1,4 +1,15 @@
+// loader
+const loader = isLoading => {
+    const loaderElement = document.getElementById('loader');
+    if (isLoading) {
+        loaderElement.classList.remove('d-none');
+    } else {
+        loaderElement.classList.add('d-none');
+    }
+}
+
 const loadComment = async () => {
+    loader(true);
     const url = 'https://jsonplaceholder.typicode.com/comments';
     try {
         const response = await fetch(url);
@@ -31,9 +42,11 @@ const showComment = (data) => {
         `
         commentContainer.appendChild(tr)
     });
+    loader(false);
 }
 
 const showPost = async (url) => {
+    loader(true);
     const postContainer = document.getElementById('post-container');
     postContainer.innerHTML = '';
     try {
@@ -57,4 +70,5 @@ const showPost = async (url) => {
     catch (error) {
         console.log(error);
     }
+    loader(false);
 }
